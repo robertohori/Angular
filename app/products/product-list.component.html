@@ -41,7 +41,7 @@
                 <td>{{product.releaseDate}}</td>
                 <td>{{product.price | currency:'CAD':true:'1.1-2'}}</td>
                 <td>
-                    {{product.starRating}}
+                   <ai-star (ratingClicked)='onRationgClicked($event)' [rating]='product.starRating'></ai-star>
                 </td>
                 </tr>
                 </tbody>
