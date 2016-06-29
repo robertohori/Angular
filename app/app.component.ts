@@ -9,7 +9,8 @@ import { WelcomeComponent } from './home/welcome.component';
 
 @Component({
     selector: 'pm-app',
-    template:`<div>
+    template:`
+                <div>
                 <nav class='navbar navbar-default'>
                     <div class='container-fluid'>
                         <a class='navbar-brand'>{{pageTitle}}</a>

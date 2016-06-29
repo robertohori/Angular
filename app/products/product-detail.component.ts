@@ -1,18 +1,39 @@
-import{Component} from "angular2/core";
+import{Component, OnInit} from "angular2/core";
 import {RouteParams, Router} from 'angular2/router'
+import { StarComponent } from '../shared/star.component';
+import { IProduct } from './product';
+import { ProductService } from './product.service';
 
 @Component({
-    templateUrl:'app/products/product-detail.component.html'
+    templateUrl:'app/products/product-detail.component.html',
+    directives: [StarComponent]
 })
 export class ProductDetailComponent{
     pageTitle:string='Product Detail';
-    constructor(private _routeParams: RouteParams,
-       private _router:Router ){
-        let id=+this._routeParams.get('id');
-        this.pageTitle +=`:${id}`;
+    product: IProduct;
+    errorMessage: string;
+
+    constructor(private _productService: ProductService,
+                private _router: Router,
+                private _routeParams: RouteParams) {
     }
 
-    onBack():void{
-        this._router.navigate(['Products'])
+    ngOnInit() {
+        if (!this.product) {
+            let id = +this._routeParams.get('id');
+            // this.pageTitle += `: ${id}`;
+            this.getProduct(id);
+        }
+    }
+
+    getProduct(id: number) {
+        this._productService.getProduct(id)
+            .subscribe(
+            product => this.product = product,
+            error => this.errorMessage = <any>error);
+    }
+
+    onBack(): void {
+        this._router.navigate(['Products']);
     }
 }
